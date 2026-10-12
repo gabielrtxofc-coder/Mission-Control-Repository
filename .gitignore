@@ -1,0 +1,43 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+*.log
+npm-debug.log*
+
+# env — nunca versionar segredos
+.env
+.env.local
+.env.*.local
+.env.production
+
+# tests
+/coverage
+/playwright-report
+/test-results
+/blob-report
+/playwright/.cache
+
+# uploads locais (anexos) e backups
+/var/
+/backups/
+/public/uploads/
+
+# typescript
+*.tsbuildinfo
+
+# editor
+.idea/
+.vscode/
