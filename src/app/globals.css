@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   Mission Control — design tokens (tema escuro padrão)
+   Cores sólidas usam tripletos RGB para suportar opacidade
+   (ex.: text-muted/70). Variáveis hex são apenas para CSS direto.
+   ───────────────────────────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+
+  --background: #0a0b0d;
+  --background-rgb: 10 11 13;
+  --surface: #111318;
+  --surface-rgb: 17 19 24;
+  --surface-2: #161a20;
+  --surface-2-rgb: 22 26 32;
+  --surface-3: #1c2128;
+  --surface-3-rgb: 28 33 40;
+
+  --border: #232833;
+  --border-rgb: 35 40 51;
+  --border-strong: #303845;
+  --border-strong-rgb: 48 56 69;
+
+  --text: #e9edf2;
+  --text-rgb: 233 237 242;
+  --muted: #8b94a3;
+  --muted-rgb: 139 148 163;
+
+  --accent: #a3e635;
+  --accent-rgb: 163 230 53;
+  --accent-hover: #b5f04f;
+  --accent-hover-rgb: 181 240 79;
+  --accent-soft: rgba(163, 230, 53, 0.12);
+
+  --danger: #f87171;
+  --danger-rgb: 248 113 113;
+  --danger-soft: rgba(248, 113, 113, 0.12);
+  --warning: #fbbf24;
+  --warning-rgb: 251 191 36;
+  --warning-soft: rgba(251, 191, 36, 0.12);
+  --info: #38bdf8;
+  --info-rgb: 56 189 248;
+  --info-soft: rgba(56, 189, 248, 0.12);
+  --success: #4ade80;
+  --success-rgb: 74 222 128;
+  --success-soft: rgba(74, 222, 128, 0.12);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Variante clara — ativada por data-theme="light" no <html>,
+   conforme a preferência salva do usuário (prefs.theme).
+   Mantém a identidade (lima) com tons legíveis sobre fundo claro.
+   ───────────────────────────────────────────────────────────── */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --background: #eceef2;
+  --background-rgb: 236 238 242;
+  --surface: #ffffff;
+  --surface-rgb: 255 255 255;
+  --surface-2: #f2f4f7;
+  --surface-2-rgb: 242 244 247;
+  --surface-3: #e6e9ef;
+  --surface-3-rgb: 230 233 239;
+
+  --border: #dfe3ea;
+  --border-rgb: 223 227 234;
+  --border-strong: #c3cad5;
+  --border-strong-rgb: 195 202 213;
+
+  --text: #15181d;
+  --text-rgb: 21 24 29;
+  --muted: #5d6672;
+  --muted-rgb: 93 102 114;
+
+  --accent: #4d7c0f;
+  --accent-rgb: 77 124 15;
+  --accent-hover: #3f6212;
+  --accent-hover-rgb: 63 98 18;
+  --accent-soft: rgba(101, 163, 13, 0.12);
+
+  --danger: #dc2626;
+  --danger-rgb: 220 38 38;
+  --danger-soft: rgba(220, 38, 38, 0.08);
+  --warning: #b45309;
+  --warning-rgb: 180 83 9;
+  --warning-soft: rgba(180, 83, 9, 0.1);
+  --info: #0284c7;
+  --info-rgb: 2 132 199;
+  --info-soft: rgba(2, 132, 199, 0.08);
+  --success: #16a34a;
+  --success-rgb: 22 163 74;
+  --success-soft: rgba(22, 163, 74, 0.1);
+}
+
+/* Cores dinâmicas (etiquetas, avatares, marcas): o tema claro escurece
+   apenas o texto/ícone para manter contraste; pontos e fundos intactos. */
+:root[data-theme="light"] .theme-adaptive-ink {
+  filter: brightness(0.62) saturate(1.15);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html,
+body {
+  background-color: var(--background);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Scrollbars discretos */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 8px;
+  border: 2px solid var(--background);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3d4757;
+}
+
+/* Foco visível e acessível */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+:root:not([data-theme="light"]) input[type="date"]::-webkit-calendar-picker-indicator,
+:root:not([data-theme="light"]) input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8);
+  cursor: pointer;
+}
+
+:root[data-theme="light"] input[type="date"]::-webkit-calendar-picker-indicator,
+:root[data-theme="light"] input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+@layer components {
+  .surface-panel {
+    @apply rounded-lg border border-border bg-surface shadow-panel;
+  }
+  .input-base {
+    @apply w-full rounded-md border border-border bg-surface-2 px-3 py-2 text-sm text-text placeholder:text-muted transition-colors focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/40 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+  }
+}
+
+/* Animações discretas */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
